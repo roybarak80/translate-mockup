@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Page Title</title>
+</head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="style.css">
+
+<body>
+    <div ng-app="myApp">
+        <div ng-controller="Ctrl">
+            <div class="translator-wrapper">
+                
+                <div class="translation-input-wrapper">
+                    <div class="translation-actions-row">
+                        <button 
+                        ng-click="currLanguage = 'english'"
+                        class="btn btn-default pull-right">
+                            English
+                        </button>
+                        <button class="btn btn-default pull-left">
+                            <i class="fa fa-exchange"></i>
+                        </button>
+                    </div>
+                    <div class="translation-input">
+                        <textarea ng-keyup="translateStr($event)" ng-model="input"></textarea>
+                    </div>
+                </div>
+
+                <div class="translation-output-wrapper">
+                    <div class="translation-actions-row">
+                        <button 
+                        ng-click="currLanguage = 'german'"
+                        class="btn btn-default pull-right">
+                        German
+                        </button>
+                    </div>
+                    <div class="translation-output">
+                        <textarea disabled ng-model="output"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
