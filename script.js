@@ -4,19 +4,28 @@ app.controller('Ctrl', function ($scope) {
 
     $scope.ret = 123
     $scope.currLanguage = 'english';
-
+    $scope.isWriteMode = false;
     $scope.german = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     $scope.chinese = ".!@#$5G9P06*<>?:{}[_+]AcErP~,`";
 
     $scope.storedOutput = [];
     $scope.lastTraslatedChar = '';
+
+    $scope.clearTranslateField = function () {
+
+        $scope.output = [];
+
+        $scope.input = [];
+        $scope.isWriteMode = false;
+
+    }
     $scope.translateStr = function (e) {
 
         // Gather all input stages
         var currPressedLetter = String.fromCharCode(e.keyCode);
         var currSelectesdLanguage = $scope.currLanguage;
 
-
+        $scope.isWriteMode = true;
         var currInputTextArr = $scope.input.split('');
 
         var lastTypedLetter = currInputTextArr[currInputTextArr.length - 1];

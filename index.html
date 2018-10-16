@@ -12,12 +12,10 @@
     <div ng-app="myApp">
         <div ng-controller="Ctrl">
             <div class="translator-wrapper">
-                
+
                 <div class="translation-input-wrapper">
                     <div class="translation-actions-row">
-                        <button 
-                        ng-click="currLanguage = 'english'"
-                        class="btn btn-default pull-right">
+                        <button ng-click="currLanguage = 'english'" class="btn btn-default pull-right">
                             English
                         </button>
                         <button class="btn btn-default pull-left">
@@ -25,16 +23,15 @@
                         </button>
                     </div>
                     <div class="translation-input">
+                        <span ng-if="isWriteMode" class="clearInput" ng-click="clearTranslateField()"><i class="fa fa-close"></i></span>
                         <textarea ng-keyup="translateStr($event)" ng-model="input"></textarea>
                     </div>
                 </div>
 
                 <div class="translation-output-wrapper">
                     <div class="translation-actions-row">
-                        <button 
-                        ng-click="currLanguage = 'german'"
-                        class="btn btn-default pull-right">
-                        German
+                        <button ng-click="currLanguage = 'german'" class="btn btn-default pull-right">
+                            German
                         </button>
                     </div>
                     <div class="translation-output">
