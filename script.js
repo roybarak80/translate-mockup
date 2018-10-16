@@ -11,9 +11,13 @@ app.controller('Ctrl', function ($scope) {
     $scope.storedOutput = [];
     $scope.translateStr = function (e) {
 
+        // Gather all input stages
         var currPressedLetter = String.fromCharCode(e.keyCode);
         var currSelectesdLanguage = $scope.currLanguage;
         var currInputTextClone = angular.copy($scope.input);
+
+
+
 
         var currInputTextArr = $scope.input.split('');
 
@@ -38,23 +42,18 @@ app.controller('Ctrl', function ($scope) {
                 $scope.storedOutput.push(';');
                 break;
 
-                default:
+            default:
                 var rnum = Math.floor(Math.random() * currSelectesdLanguage.length);
                 lastTypedLetter = currSelectesdLanguage.substring(rnum, rnum + 1);
                 $scope.storedOutput.push(lastTypedLetter);
 
         }
-        // if (currPressedLetter !== " ") {
-        //     var rnum = Math.floor(Math.random() * currSelectesdLanguage.length);
-        //     lastTypedLetter = currSelectesdLanguage.substring(rnum, rnum + 1);
-        //     $scope.storedOutput.push(lastTypedLetter);
-        // } else {
-        //     $scope.storedOutput.push(' ');
-        // }
 
+
+        var storedLastTranslatedChar = $scope.storedOutput[$scope.storedOutput.length - 1];
         $scope.traslatedTextStr = $scope.storedOutput.join('');
 
-        console.log(currPressedLetter);
+        console.log(storedLastTranslatedChar);
         $scope.output = $scope.traslatedTextStr;
     }
 
