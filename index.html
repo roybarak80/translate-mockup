@@ -4,50 +4,76 @@
 <head>
     <title>Page Title</title>
 </head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="style.css">
 
 <body>
     <div ng-app="myApp">
         <div ng-controller="Ctrl">
-            <div class="translator-wrapper">
+
+
+            <div class="translator-wrapper"  ng-cloak>
 
                 <div class="translation-input-wrapper">
                     <div class="translation-actions-row">
-                        <button ng-click="changeLanguage('english')" class="btn btn-default pull-right">
+
+                        <div class="btn-group pull-right">
+                            <label class="btn btn-primary" ng-model="primaryLanguage" btn-radio="'chinese'">Chinese</label>
+                            <label class="btn btn-primary" ng-model="primaryLanguage" btn-radio="'german'">German</label>
+                            <label class="btn btn-primary" ng-model="primaryLanguage" btn-radio="'english'">English</label>
+                        </div>
+
+                        <!-- <button ng-click="changeLanguage('english')" ng-class="{'selected': currLanguage == 'english'}"
+                            class="btn btn-default pull-right">
                             English
-                        </button>
-                        
+                        </button> -->
+
                         <button class="btn btn-default pull-left">
                             <i class="fa fa-exchange"></i>
                         </button>
                     </div>
                     <div class="translation-input">
                         <span ng-if="isWriteMode" class="clearInput" ng-click="clearTranslateField()"><i class="fa fa-close"></i></span>
-                        <textarea ng-keyup="translateStr($event)" ng-model="input"></textarea>
+                        <span ng-if="isWriteMode" class="letterCount" >0 / {{inputTranslated.length}}</span>
+
+                        <textarea ng-keyup="translateHandle($event)" ng-model="inputTranslated"></textarea>
                     </div>
                 </div>
 
                 <div class="translation-output-wrapper">
                     <div class="translation-actions-row">
-                        <button ng-click="changeLanguage('german')" class="btn btn-default side-left-margin pull-right">
+
+
+
+                        <div class="btn-group pull-right">
+                            <label class="btn btn-primary" ng-model="secondaryLanguage" btn-radio="'chinese'">Chinese</label>
+                            <label class="btn btn-primary" ng-model="secondaryLanguage" btn-radio="'german'">German</label>
+                            <label class="btn btn-primary" ng-model="secondaryLanguage" btn-radio="'english'">English</label>
+                        </div>
+
+                        <!-- <button ng-click="changeLanguage('german')" ng-class="{'selected': currLanguage == 'german'}"
+                            class="btn btn-default side-left-margin pull-right">
                             German
                         </button>
-                        <button ng-click="changeLanguage('chinese')" class="btn btn-default  pull-right">
+                        <button ng-click="changeLanguage('chinese')" ng-class="{'selected': currLanguage == 'chinese'}"
+                            class="btn btn-default  pull-right">
                             Chinese
-                        </button>
+                        </button> -->
                     </div>
                     <div class="translation-output">
                         <textarea disabled ng-model="output"></textarea>
                     </div>
-                   
+
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.js"></script>
+    <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.4.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.js"></script> -->
     <script src="script.js"></script>
 </body>
 

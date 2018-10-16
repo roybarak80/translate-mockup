@@ -51,6 +51,20 @@ textarea:disabled{
 
 }
 
+.letterCount{
+  position: absolute;
+  bottom: 2px;
+  left: 7px;
+  font-size: 11px;
+  color: gray;
+}
+
 .side-left-margin{
   margin-left: 6px;
+}
+
+.selected{
+  color: #333;
+  background-color: #d4d4d4;
+  border-color: #8c8c8c;
 }
