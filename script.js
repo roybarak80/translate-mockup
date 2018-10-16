@@ -2,19 +2,40 @@ var app = angular.module('myApp', []);
 
 app.controller('Ctrl', function ($scope) {
 
-    $scope.ret = 123
     $scope.currLanguage = 'english';
     $scope.isWriteMode = false;
-    $scope.german = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    $scope.chinese = ".!@#$5G9P06*<>?:{}[_+]AcErP~,`";
-
+   
+    
     $scope.storedOutput = [];
     $scope.lastTraslatedChar = '';
+
+    $scope.changeLanguage = function(lanStr){
+
+        
+       var german = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        var chinese = ".!@#$5G9P06*<>?:{}[_+]AcErP~,`";
+
+         //Switch language 
+        switch(lanStr){
+            case 'german':
+            $scope.currLanguage = german;
+            break;
+
+            case 'chinese':
+            $scope.currLanguage = chinese;
+            break;
+
+           default:
+           $scope.currLanguage = 'english'
+
+        }
+     //$scope.currLanguage;
+    }
 
     $scope.clearTranslateField = function () {
 
         $scope.output = [];
-
+        $scope.storedOutput = [];
         $scope.input = [];
         $scope.isWriteMode = false;
 
@@ -32,6 +53,8 @@ app.controller('Ctrl', function ($scope) {
         // var lastTypedLetterClone = angular.copy(lastTypedLetter);
         // var traslatedTextArr = '';
         // var traslatedTextStr = '';
+
+       
         switch (e.keyCode) {
             case 32:
                 $scope.storedOutput.push(' ');
@@ -56,7 +79,7 @@ app.controller('Ctrl', function ($scope) {
 
                     var newTranslatedLetter = $scope.storedOutput[$scope.storedOutput.length - 1]
                     $scope.storedOutput.push(newTranslatedLetter);
-                    console.log($scope.storedOutput);
+                   // console.log($scope.storedOutput);
                     // $scope.storedOutput[$scope.storedOutput.length - 1] = '+';
                 } else {
                     var rnum = Math.floor(Math.random() * currSelectesdLanguage.length);

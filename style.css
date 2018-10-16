@@ -5,7 +5,7 @@
 .translator-wrapper {
   width: 80%;
   float: right;
-  padding: 20px 0;
+  padding: 15px 15px;
 }
 
 .translation-actions-row {
@@ -37,6 +37,11 @@ textarea {
   padding: 9px;
   margin: 0px;
   margin: -2px 0px -5px 0px;
+  
+}
+
+textarea:disabled{
+  background-color: whitesmoke;
 }
 
 .clearInput {
@@ -44,4 +49,8 @@ textarea {
   top: 5px;
   right: 5px;
 
+}
+
+.side-left-margin{
+  margin-left: 6px;
 }
