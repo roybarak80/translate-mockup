@@ -9,20 +9,18 @@ app.controller('Ctrl', function ($scope) {
     $scope.chinese = ".!@#$5G9P06*<>?:{}[_+]AcErP~,`";
 
     $scope.storedOutput = [];
+    $scope.lastTraslatedChar = '';
     $scope.translateStr = function (e) {
 
         // Gather all input stages
         var currPressedLetter = String.fromCharCode(e.keyCode);
         var currSelectesdLanguage = $scope.currLanguage;
-        var currInputTextClone = angular.copy($scope.input);
-
-
 
 
         var currInputTextArr = $scope.input.split('');
 
         var lastTypedLetter = currInputTextArr[currInputTextArr.length - 1];
-
+        // var lastTypedLetterClone = angular.copy(lastTypedLetter);
         // var traslatedTextArr = '';
         // var traslatedTextStr = '';
         switch (e.keyCode) {
@@ -43,17 +41,30 @@ app.controller('Ctrl', function ($scope) {
                 break;
 
             default:
-                var rnum = Math.floor(Math.random() * currSelectesdLanguage.length);
-                lastTypedLetter = currSelectesdLanguage.substring(rnum, rnum + 1);
-                $scope.storedOutput.push(lastTypedLetter);
+
+
+                if (currPressedLetter.toLowerCase() === $scope.input[$scope.input.length - 2]) {
+
+                    var newTranslatedLetter = $scope.storedOutput[$scope.storedOutput.length - 1]
+                    $scope.storedOutput.push(newTranslatedLetter);
+                    console.log($scope.storedOutput);
+                    // $scope.storedOutput[$scope.storedOutput.length - 1] = '+';
+                } else {
+                    var rnum = Math.floor(Math.random() * currSelectesdLanguage.length);
+                    lastTypedLetter = currSelectesdLanguage.substring(rnum, rnum + 1);
+                    $scope.lastTraslatedChar = lastTypedLetter;
+
+                    $scope.storedOutput.push(lastTypedLetter);
+                }
+
 
         }
 
 
-        var storedLastTranslatedChar = $scope.storedOutput[$scope.storedOutput.length - 1];
+        //var storedLastTranslatedChar = $scope.storedOutput[$scope.storedOutput.length - 1];
         $scope.traslatedTextStr = $scope.storedOutput.join('');
 
-        console.log(storedLastTranslatedChar);
+        //  console.log(storedLastTranslatedChar);
         $scope.output = $scope.traslatedTextStr;
     }
 
