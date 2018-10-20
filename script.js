@@ -1,169 +1,150 @@
-
-
-
 var app = angular.module('myApp', ['ngAnimate', 'ui.bootstrap']);
 
 app.controller('Ctrl', function ($scope) {
 
-
-    $scope.primaryLanguage ='english';
+    $scope.primaryLanguage = 'english';
     $scope.secondaryLanguage = 'german';
-    $scope.inputTranslated ='';
-    //----------------------------
 
-
-    $scope.currLanguage = 'english';
-    $scope.isWriteMode = false;
-   
-    
-    $scope.storedOutput = [];
-    $scope.storedInputTranslated = [];
-    $scope.lastTraslatedChar = '';
-
-    $scope.changeLanguage = function(lanStr){
-
-        
-        var german = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        var chinese = ".!@#$5G9P06*<>?:{}[_+]AcErP~,`";
-
-         //Switch language 
-        switch(lanStr){
-            case 'german':
-            $scope.currLanguage = german;
-            break;
-
-            case 'chinese':
-            $scope.currLanguage = chinese;
-            break;
-
-           default:
-           $scope.currLanguage = 'english'
-
-        }
-     //$scope.currLanguage;
-    }
+    // Define the desegnate fields for translate
+    $scope.inputLanguageField = '';
+    $scope.outputLanguageField = [];
 
     $scope.clearTranslateField = function () {
-
-        $scope.output = [];
-        $scope.storedOutput = [];
-        $scope.input = [];
-        $scope.isWriteMode = false;
+        $scope.inputTranslated = '';
+        $scope.outputLanguageField = [];
 
     }
 
-    $scope.translateHandle = function(){
-        
+    $scope.changeLanguage = function (isPressed) {
+
+        // Show clear button and letters count
         $scope.isWriteMode = true;
-      //  var currInputText = $scope.inputTranslated;
+        if (isPressed) {
+            $scope.inputTranslated = '';
+            $scope.outputLanguageField = [];
+        }
+
+        var currPrimaryLanguage = '';
+        var currSecondaryLanguage = '';
+        // Define Languages
         var german = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         var chinese = ".!@#$5G9P06*<>?:{}[_+]AcErP~,`";
 
-         //Switch language 
-        switch($scope.primaryLanguage){
+        //Switch language 
+        switch ($scope.primaryLanguage) {
             case 'german':
-            var currLanguage = german;
-            break;
+                currPrimaryLanguage = german;
+                break;
 
             case 'chinese':
-            var currLanguage = chinese;
-            break;
+                currPrimaryLanguage = chinese;
+                break;
 
             case 'english':
-            var currLanguage = [];
-            break;
-
-          
+                currPrimaryLanguage = [];
+                break;
 
         }
 
-        if(currLanguage.length >0){
-            var currInputTextArr = $scope.inputTranslated.split('');
+        switch ($scope.secondaryLanguage) {
+            case 'german':
+                currSecondaryLanguage = german;
+                break;
 
-            var lastTypedLetter = currInputTextArr[currInputTextArr.length - 1];
-            var rnum = Math.floor(Math.random() * currLanguage.length);
-            lastTypedLetter = currLanguage.substring(rnum, rnum + 1);
-            $scope.storedInputTranslated.push(lastTypedLetter);
-            $scope.traslatedTextStr = $scope.storedInputTranslated.join('');
-    
-            //  console.log(storedLastTranslatedChar);
-            $scope.inputTranslated = $scope.traslatedTextStr;
+            case 'chinese':
+                currSecondaryLanguage = chinese;
+                break;
+
+            case 'english':
+                currSecondaryLanguage = [];
+                break;
+
         }
-      
+
+        return [currPrimaryLanguage, currSecondaryLanguage];
 
     }
-    $scope.translateStr = function (e) {
 
-        // Gather all input stages
-        var currPressedLetter = String.fromCharCode(e.keyCode);
-        var currSelectesdLanguage = $scope.currLanguage;
+    $scope.translateText = function (e, input, currSelectedLang) {
 
-        $scope.isWriteMode = true;
-        var currInputTextArr = $scope.input.split('');
+        var currLanguage = $scope.changeLanguage();
+        var translateOutPutArr = $scope.translateOutPut(e, currLanguage)
 
-        var lastTypedLetter = currInputTextArr[currInputTextArr.length - 1];
-        // var lastTypedLetterClone = angular.copy(lastTypedLetter);
-        // var traslatedTextArr = '';
-        // var traslatedTextStr = '';
+        var currInput = $scope.inputTranslated;
+        var currOutput = $scope.outputLanguageField;
 
-       
-        switch (e.keyCode) {
-            case 32:
-                $scope.storedOutput.push(' ');
-                break;
+        var outStr = '';
 
-            case 188:
-                $scope.storedOutput.push(',');
-                break;
+        if (currOutput.length > 0) {
 
-            case 49:
-                $scope.storedOutput.push('!');
-                break;
+            if (translateOutPutArr[1].length > 0) {
+                var currOutputArr = $scope.outputLanguageField.split('');
+                currOutputArr.push(translateOutPutArr[1]);
+                outStr = currOutputArr.join('');
+            } else {
+                outStr = currInput;
+            }
 
-            case 186:
-                $scope.storedOutput.push(';');
-                break;
+        } else {
+            if (translateOutPutArr[1].length > 0) {
+                var currOutputArr = [];
+                currOutputArr.push(translateOutPutArr[1]);
+                outStr = currOutputArr.join('');
+            } else {
+                outStr = currInput;
+            }
+        }
 
-            default:
+        $scope.outputLanguageField = outStr;
 
+    }
 
-                if (currPressedLetter.toLowerCase() === $scope.input[$scope.input.length - 2]) {
+    $scope.translateOutPut = function (e, currSelectedLanguage) {
 
-                    var newTranslatedLetter = $scope.storedOutput[$scope.storedOutput.length - 1]
-                    $scope.storedOutput.push(newTranslatedLetter);
-                   // console.log($scope.storedOutput);
-                    // $scope.storedOutput[$scope.storedOutput.length - 1] = '+';
-                } else {
-                    var rnum = Math.floor(Math.random() * currSelectesdLanguage.length);
-                    lastTypedLetter = currSelectesdLanguage.substring(rnum, rnum + 1);
-                   // $scope.lastTraslatedChar = lastTypedLetter;
+        var languagesOutArr = [];
+        for (var ind01 = 0; ind01 < currSelectedLanguage.length; ind01++) {
+            var currSelectedLanguageItem = currSelectedLanguage[ind01];
 
-                    $scope.storedOutput.push(lastTypedLetter);
+            if (currSelectedLanguageItem.length != 0) {
+
+                switch (e.keyCode) {
+                    case 32:
+                        languagesOutArr.push(' ');
+                        break;
+
+                    case 188:
+                        languagesOutArr.push(',');
+                        break;
+
+                    case 49:
+                        languagesOutArr.push('!');
+                        break;
+
+                    case 186:
+                        languagesOutArr.push(';');
+                        break;
+
+                    default:
+                        var rnum = Math.floor(Math.random() * currSelectedLanguageItem.length);
+                        currInputLastChar = currSelectedLanguageItem.substring(rnum, rnum + 1);
+                        languagesOutArr.push(currInputLastChar);
                 }
 
+            } else {
+                languagesOutArr.push('');
+            }
 
         }
 
-
-        //var storedLastTranslatedChar = $scope.storedOutput[$scope.storedOutput.length - 1];
-        $scope.traslatedTextStr = $scope.storedOutput.join('');
-
-        //  console.log(storedLastTranslatedChar);
-        $scope.output = $scope.traslatedTextStr;
+        return languagesOutArr;
     }
 
+    $scope.switchFields = function () {
+        
+        var currInput = $scope.inputTranslated;
+        var currOutput = $scope.outputLanguageField;
+
+        $scope.outputLanguageField = currInput;
+        $scope.inputTranslated = currOutput;
+    }
 });
-
-// var currInputTextArr = $scope.input.split('');
-// var randomstring = '';
-
-
-// //Translate
-// for (var ind01 = 0; ind01 < currInputTextArr.length; ind01++) {
-//     var currValue = currInputTextArr[ind01];
-//     var rnum = Math.floor(Math.random() * currSelectesdLanguage.length);
-//     randomstring += currSelectesdLanguage.substring(rnum, rnum + 1);
-// }
-// var currOutputClone = angular.copy(randomstring);
-// //$scope.output = $scope.input;
-// console.log(randomstring)
